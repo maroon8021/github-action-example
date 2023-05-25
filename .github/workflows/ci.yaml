@@ -37,7 +37,7 @@ jobs:
   echo-false:
     needs: test-false
     runs-on: ubuntu-latest
-    if: ${{ failure() }}
+    if: ${{ cancelled() }}
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
