@@ -1,0 +1,45 @@
+name: Github Action Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-true:
+    runs-on: ubuntu-latest
+    if: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo "Hello World"
+
+  test-false:
+    runs-on: ubuntu-latest
+    if: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo "Hello World"
+
+  echo-true:
+    needs: test-true
+    runs-on: ubuntu-latest
+    if: ${{ needs.test-true.result == 'success' }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo "echo-true is called"
+
+  echo-false:
+    needs: test-false
+    runs-on: ubuntu-latest
+    if: ${{ needs.test-false.result == 'skipped' }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo "echo-false is called"
