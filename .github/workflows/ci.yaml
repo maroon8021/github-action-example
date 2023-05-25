@@ -37,7 +37,7 @@ jobs:
   echo-false:
     needs: test-false
     runs-on: ubuntu-latest
-    if: ${{ needs.test-false.result == 'skipped' }}
+    if: true
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
