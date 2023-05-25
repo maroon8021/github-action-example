@@ -1,0 +1,26 @@
+name: Github Action Trigger Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/hotfix') }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo "Hello World"
+
+  echo:
+    needs: test-false
+    runs-on: ubuntu-latest
+    if: ${{ ! failure() && needs.test.result == 'skipped' }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo "prod環境にリリースできないブランチが指定されました"
+          echo "指定されたブランチ名: ${{ github.ref }}"
+          echo "リリース可能なブランチ名: main, hotfix*"
