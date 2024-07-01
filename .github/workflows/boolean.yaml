@@ -7,7 +7,6 @@ jobs:
   echo:
     needs: test
     runs-on: ubuntu-latest
-    if: ${{ ! failure() && needs.test.result == 'skipped' }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up a conditional variable
