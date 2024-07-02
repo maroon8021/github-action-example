@@ -38,22 +38,10 @@ jobs:
         run: |
           echo "env.value: ${{ env.value }}"
           ENV_VALUE=${{ env.falseValue || true }}
-          if [ $ENV_VALUE ]; then
-            echo "ENV_VALUE is true"
-          else
-            echo "ENV_VALUE is false"
-          fi
+          echo "ENV_VALUE: $ENV_VALUE"
 
           OUTPUT_VALUE=${{ steps.output_step.outputs.falseValue || true }}
-          if [ $OUTPUT_VALUE ]; then
-            echo "OUTPUT_VALUE is true"
-          else
-            echo "OUTPUT_VALUE is false"
-          fi
+          echo "OUTPUT_VALUE: $OUTPUT_VALUE"
 
           OUTPUT_VALUE_FROM_JSON=${{ fromJson(steps.output_step.outputs.falseValue) || true }}
-          if [ $OUTPUT_VALUE_FROM_JSON ]; then
-            echo "OUTPUT_VALUE_FROM_JSON is true"
-          else
-            echo "OUTPUT_VALUE_FROM_JSON is false"
-          fi
+          echo "OUTPUT_VALUE_FROM_JSON: $OUTPUT_VALUE_FROM_JSON"
