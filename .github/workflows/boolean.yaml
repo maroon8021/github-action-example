@@ -9,7 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up a conditional variable to env
-        id: example_step
         run: |
           echo "value=${{ false || 'hoge' }}" >> $GITHUB_ENV
           echo "falseValue=${{ false }}" >> $GITHUB_ENV
