@@ -16,16 +16,17 @@ jobs:
       - name: Use the conditional variable from env
         run: |
           echo "${{ env.value }}"
-          if [ "${{ env.falseValue }}" = false ]; then
-            echo "falseValue is false"
-          else
+          FALSE_VALUE="${{ env.falseValue }}"
+          if [ "${{ env.falseValue }}" ]; then
             echo "falseValue is not false"
+          else
+            echo "falseValue is false"
           fi
 
       - name: Set up a conditional variable to output
         id: output_step
         run: |
-          FALSE_VALUE = false
+          FALSE_VALUE=false
           if [ "$FALSE_VALUE" = false ]; then
             echo "falseValue is false"
             echo "falseValue="$FALSE_VALUE" >> $GITHUB_OUTPUT
@@ -35,10 +36,17 @@ jobs:
 
       - name: Use the conditional variable from output
         run: |
-          FALSE_VALUE = ${{ steps.output_step.outputs.falseValue }}
-          if [ "$FALSE_VALUE" = false ]; then
-            echo "falseValue is false"
-            echo "falseValue="$FALSE_VALUE" >> $GITHUB_OUTPUT
+          echo "env.value: ${{ env.value }}"
+          ENV_VALUE=${{ env.falseValue || true }}
+          if [ "$ENV_VALUE" ]; then
+            echo "ENV_VALUE is true"
           else
-            echo "falseValue is not false"
+            echo "ENV_VALUE is false"
+          fi
+
+          OUTPUT_VALUE=${{ steps.output_step.outputs.falseValue || true }}
+          if [ "$OUTPUT_VALUE" ]; then
+            echo "OUTPUT_VALUE is true"
+          else
+            echo "OUTPUT_VALUE is false"
           fi
