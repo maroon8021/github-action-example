@@ -29,7 +29,7 @@ jobs:
           FALSE_VALUE=false
           if [ "$FALSE_VALUE" = false ]; then
             echo "falseValue is false"
-            echo "falseValue="$FALSE_VALUE" >> $GITHUB_OUTPUT
+            echo "falseValue=$FALSE_VALUE" >> $GITHUB_OUTPUT
           else
             echo "falseValue is not false"
           fi
