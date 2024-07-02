@@ -8,9 +8,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up a conditional variable
+      - name: Set up a conditional variable to env
         id: example_step
-        run: echo "value=${{ false || 'hoge' }}" >> $GITHUB_ENV
+        run: |
+          echo "value=${{ false || 'hoge' }}" >> $GITHUB_ENV
+          echo "falseValue=${{ false }}" >> $GITHUB_ENV
 
-      - name: Use the conditional variable
-        run: echo "${{ env.value }}"
+      - name: Use the conditional variable from env
+        run: |
+          echo "${{ env.value }}"
+          if [ "${{ env.falseValue }}" = false ]; then
+            echo "falseValue is false"
+          else
+            echo "falseValue is not false"
+          fi
+
+      - name: Set up a conditional variable to output
+        id: output_step
+        run: |
+          FALSE_VALUE = false
+          if [ "$FALSE_VALUE" = false ]; then
+            echo "falseValue is false"
+            echo "falseValue="$FALSE_VALUE" >> $GITHUB_OUTPUT
+          else
+            echo "falseValue is not false"
+          fi
+
+      - name: Use the conditional variable from output
+        run: |
+          FALSE_VALUE = ${{ steps.output_step.outputs.falseValue }}
+          if [ "$FALSE_VALUE" = false ]; then
+            echo "falseValue is false"
+            echo "falseValue="$FALSE_VALUE" >> $GITHUB_OUTPUT
+          else
+            echo "falseValue is not false"
+          fi
