@@ -50,3 +50,10 @@ jobs:
           else
             echo "OUTPUT_VALUE is false"
           fi
+
+          OUTPUT_VALUE_FROM_JSON=${{ fromJson(steps.output_step.outputs.falseValue) || true }}
+          if [ $OUTPUT_VALUE_FROM_JSON ]; then
+            echo "OUTPUT_VALUE_FROM_JSON is true"
+          else
+            echo "OUTPUT_VALUE_FROM_JSON is false"
+          fi
