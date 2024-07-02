@@ -38,14 +38,14 @@ jobs:
         run: |
           echo "env.value: ${{ env.value }}"
           ENV_VALUE=${{ env.falseValue || true }}
-          if [ "$ENV_VALUE" ]; then
+          if [ $ENV_VALUE ]; then
             echo "ENV_VALUE is true"
           else
             echo "ENV_VALUE is false"
           fi
 
           OUTPUT_VALUE=${{ steps.output_step.outputs.falseValue || true }}
-          if [ "$OUTPUT_VALUE" ]; then
+          if [ $OUTPUT_VALUE ]; then
             echo "OUTPUT_VALUE is true"
           else
             echo "OUTPUT_VALUE is false"
